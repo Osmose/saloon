@@ -13,7 +13,7 @@ define(function(require) {
     // Callback run once all resources have been loaded.
     loader.loadAll().done(function() {
         // Initialize engine.
-        var engine = new Engine(160, 144, 3);
+        var engine = new Engine(256, 224, 3);
         engine.bg_color = '#FFFF8B';
 
         // ADD INITIAL STATE (entities, worlds, etc) HERE
