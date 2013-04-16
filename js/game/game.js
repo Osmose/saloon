@@ -1,11 +1,11 @@
 define(function(require) {
     var Engine = require('flux/engine');
-    var Entity = require('flux/entity');
     var Graphic = require('flux/graphics/graphic');
     var TiledGraphic = require('flux/graphics/tiled');
     var Tilemap = require('flux/tilemap');
 
     var loader = require('game/loader');
+    var Player = require('game/player');
     var SaloonWorld = require('game/world');
 
     // REGISTER RESOURCES TO LOAD HERE
@@ -20,14 +20,6 @@ define(function(require) {
         engine.bg_color = '#000000';
 
         // ADD INITIAL STATE (entities, worlds, etc) HERE
-        function Player(x, y) {
-            Entity.call(this, x, y);
-            this.graphic = new TiledGraphic(loader.get('tiles_player'),
-                                            16, 16, 0, 0);
-            this.graphic.addTileName('standing', 0);
-            this.graphic.currentTile = 'standing';
-        }
-        Player.prototype = Object.create(Entity.prototype);
         engine.addEntity(new Player(5 * 16, 6 * 16));
 
         // Create map.
