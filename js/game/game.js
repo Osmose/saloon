@@ -9,7 +9,7 @@ define(function(require) {
     var SaloonWorld = require('game/world');
 
     // REGISTER RESOURCES TO LOAD HERE
-    loader.register('firefox', 'img/firefox.png', 'image');
+    loader.register('tiles_player', 'img/player.png', 'image');
     loader.register('tiles_bar', 'img/tiles.png', 'image');
     loader.register('map_bar', 'maps/bar.tmx', 'map');
 
@@ -22,17 +22,21 @@ define(function(require) {
         // ADD INITIAL STATE (entities, worlds, etc) HERE
         function Player(x, y) {
             Entity.call(this, x, y);
-            this.graphic = new Graphic(loader.get('firefox'));
+            this.graphic = new TiledGraphic(loader.get('tiles_player'),
+                                            16, 16, 0, 0);
+            this.graphic.addTileName('standing', 0);
+            this.graphic.currentTile = 'standing';
         }
         Player.prototype = Object.create(Entity.prototype);
-        engine.addEntity(new Player(10, 10));
+        engine.addEntity(new Player(5 * 16, 6 * 16));
 
         // Create map.
         var map = loader.get('map_bar');
         var tilemap = new Tilemap(map.layers['tiles'].grid, 0, 0);
 
         // Create tuled graphic for rendering tilemap.
-        tilemap.graphic = new TiledGraphic(loader.get('tiles_bar'), 16, 16, 0, 0);
+        tilemap.graphic = new TiledGraphic(loader.get('tiles_bar'),
+                                           16, 16, 0, 0);
         engine.world.tilemap = tilemap;
 
         // Append canvas to screen and start the engine!
