@@ -1,14 +1,14 @@
-# House Blend
+# Saloon
 
-House Blend is a project template to help you hit the ground running when making Javascript-based games using [flux][].
+Saloon is a canvas-based JavaScript game that uses [flux][].
 
 [flux]: https://github.com/Osmose/flux
 
-## Hitting the Ground Running
+## Setup
 
-1. `git clone --recursive git://github.com/Osmose/house-blend.git game_name`
-2. Open `game_name/js/game/game.js` in your favorite code editor.
-3. There is no step 3.
+1. `git clone --recursive git://github.com/Osmose/saloon.git`
+2. View `index.html` in your favorite web browser.
+
 
 # License
 
