@@ -20,8 +20,8 @@ define(function(require) {
 		this.clear();
 	};
 
-	Dialog.prototype.insert = function () {
-
+	Dialog.prototype.insert = function (text) {
+		this.el.html(text);
 	};
 
 	Dialog.prototype.clear = function () {

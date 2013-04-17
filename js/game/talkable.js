@@ -27,8 +27,7 @@ define(function(require) {
         var kb = this.engine.kb,
             that = this;
 
-        $('.dialog').html(text);
-
+        this.dialog.insert(text);
         this.dialog.show();
 
         $('#game').on('keypress', function () {
