@@ -6,6 +6,7 @@ define(function(require) {
 
     function Player(x, y) {
         Entity.call(this, x, y);
+
         this.graphic = new TiledGraphic(loader.get('tiles_player'),
                                         16, 16, 0, 0);
         this.graphic.addTileName('down', 0);
@@ -21,12 +22,14 @@ define(function(require) {
         this.direction = 'down';
         this.walking = false;
 
+        this.setHitbox(0, 0, 16, 16);
     }
     Player.prototype = Object.create(Entity.prototype);
 
     Player.prototype.tick = function() {
         Entity.prototype.tick.call(this);
-        var kb = this.engine.kb;
+        var kb = this.engine.kb,
+            talkable = this.getCollideEntity('talkable', 5, 5);
 
         this.walking = false;
         if (kb.check(kb.RIGHT)) {
@@ -44,6 +47,12 @@ define(function(require) {
         if (kb.check(kb.DOWN)) {
             this.walking = true;
             this.direction = 'down';
+        }
+
+        if(kb.check(kb.D)) {
+            if (talkable) {
+                talkable.talk('Fight!!!');
+            }
         }
 
         if (this.walking) {
