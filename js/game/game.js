@@ -6,6 +6,7 @@ define(function(require) {
 
     var loader = require('game/loader');
     var Player = require('game/player');
+    var Talkable = require('game/talkable');
     var SaloonWorld = require('game/world');
 
     // REGISTER RESOURCES TO LOAD HERE
@@ -21,6 +22,9 @@ define(function(require) {
 
         // ADD INITIAL STATE (entities, worlds, etc) HERE
         engine.addEntity(new Player(5 * 16, 6 * 16));
+
+        // ADD TALKABLE PLAYER
+        engine.addEntity(new Talkable(10 * 16, 8 * 16));
 
         // Create map.
         var map = loader.get('map_bar');
