@@ -24,7 +24,7 @@ define(function(require) {
         engine.addEntity(new Player(5 * 16, 6 * 16));
 
         // ADD TALKABLE PLAYER
-        engine.addEntity(new Talkable(10 * 16, 8 * 16));
+        engine.addEntity(new Talkable(10 * 16, 8 * 16, 'Hello fellow barfighter!'));
 
         // Create map.
         var map = loader.get('map_bar');

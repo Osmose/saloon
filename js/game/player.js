@@ -23,13 +23,15 @@ define(function(require) {
         this.walking = false;
 
         this.setHitbox(0, 0, 16, 16);
+
+        this._dpress = false;
+        this._talkwait = false;
     }
     Player.prototype = Object.create(Entity.prototype);
 
     Player.prototype.tick = function() {
         Entity.prototype.tick.call(this);
-        var kb = this.engine.kb,
-            talkable = this.getCollideEntity('talkable', 5, 5);
+        var kb = this.engine.kb;
 
         this.walking = false;
         if (kb.check(kb.RIGHT)) {
@@ -49,10 +51,16 @@ define(function(require) {
             this.direction = 'down';
         }
 
-        if(kb.check(kb.D)) {
+        if(!this._dpress && !this._talkwait && kb.check(kb.D)) {
+            this._depress = true;
+            var talkable = this.getCollideEntity('talkable', 5, 5);
             if (talkable) {
-                talkable.talk('Fight!!!');
+                this._talkwait = true;
+                talkable.talk();
             }
+        } else if (!kb.check(kb.D)) {
+            this._dpress = false;
+            this._talkwait = false;
         }
 
         if (this.walking) {

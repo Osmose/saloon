@@ -3,12 +3,11 @@ define(function(require) {
 	var Engine = require('flux/engine');
 
 	function Dialog () {
-
 		var dialog = document.createElement('div');
 		dialog.setAttribute('class', 'dialog');
 
 		document.getElementById('game').appendChild(dialog);
-		this.el = $('.dialog');
+		this.el = $(dialog);
 	}
 
 	Dialog.prototype.show = function () {
