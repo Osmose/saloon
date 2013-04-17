@@ -12,7 +12,7 @@ define(function(require) {
 	}
 
 	Dialog.prototype.show = function () {
-		this.el.show();
+        this.el.show();
 	};
 
 	Dialog.prototype.hide = function () {

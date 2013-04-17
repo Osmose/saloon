@@ -19,7 +19,7 @@ define(function(require) {
     Player.prototype.tick = function() {
         Entity.prototype.tick.call(this);
         var kb = this.engine.kb,
-            talkable;
+            talkable = this.getCollideEntity('talkable', 5, 5);
 
         this.walking = false;
         if (kb.check(kb.RIGHT)) {
@@ -40,9 +40,8 @@ define(function(require) {
         }
 
         if(kb.check(kb.D)) {
-            talkable = this.getCollideEntity('talkable', 5, 5);
-            if(talkable) {
-               talkable.talk('Fight!!!'); 
+            if (talkable) {
+                talkable.talk('Fight!!!'); 
             }
         }
 

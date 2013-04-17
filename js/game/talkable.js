@@ -3,6 +3,7 @@ define(function(require) {
     var TiledGraphic = require('flux/graphics/tiled');
     var Engine = require('flux/engine');
 
+    var DialogWorld = require('game/dialogworld');
     var loader = require('game/loader');
     var Dialog = require('game/dialog');
 
@@ -24,17 +25,25 @@ define(function(require) {
 
     Talkable.prototype.talk = function (text) {
 
-        var kb = this.engine.kb,
-            that = this;
+        var that = this,
+            kb = this.engine.kb;
+
+        var dialogWorld = new DialogWorld();
+        this.engine.pushWorld(dialogWorld, true, false);
 
         this.dialog.insert(text);
         this.dialog.show();
 
         $('#game').on('keypress', function () {
-            if (kb.check(kb.D)) {
-                that.dialog.hide();
+            if (kb.check(kb.SPACE) && that.engine.world === dialogWorld) {
+                that.stopTalking();
             }
         });
+    };
+
+    Talkable.prototype.stopTalking = function () {
+        this.dialog.hide();
+        this.engine.popWorld();
     };
 
     return Talkable;
