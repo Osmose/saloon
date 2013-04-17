@@ -37,6 +37,7 @@ define(function(require) {
 
         // Append canvas to screen and start the engine!
         document.querySelector('#game').appendChild(engine.canvas);
+
         engine.start();
     });
 });

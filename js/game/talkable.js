@@ -4,6 +4,7 @@ define(function(require) {
     var Engine = require('flux/engine');
 
     var loader = require('game/loader');
+    var Dialog = require('game/dialog');
 
     function Talkable(x, y) {
         Entity.call(this, x, y);
@@ -15,19 +16,24 @@ define(function(require) {
         this.type = 'talkable';
 
         this.setHitbox(0, 0, 16, 16);
+
+        // Create dialog element
+        this.dialog = new Dialog();
     }
     Talkable.prototype = Object.create(Entity.prototype);
 
     Talkable.prototype.talk = function (text) {
 
         var kb = this.engine.kb,
-            dialog = $('.dialog').html(text);
+            that = this;
 
-        dialog.show();
+        $('.dialog').html(text);
+
+        this.dialog.show();
 
         $('#game').on('keypress', function () {
             if (kb.check(kb.D)) {
-                dialog.hide();
+                that.dialog.hide();
             }
         });
     };
