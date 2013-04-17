@@ -6,8 +6,9 @@ define(function(require) {
 
     var loader = require('game/loader');
     var Player = require('game/player');
-    var Talkable = require('game/talkable');
     var SaloonWorld = require('game/world');
+    var SaloonEngine = require('game/engine');
+    var Talkable = require('game/talkable');
 
     // REGISTER RESOURCES TO LOAD HERE
     loader.register('tiles_player', 'img/player.png', 'image');
@@ -17,11 +18,13 @@ define(function(require) {
     // Callback run once all resources have been loaded.
     loader.loadAll().done(function() {
         // Initialize engine.
-        var engine = new Engine(256, 224, 3, new SaloonWorld());
+        var engine = new SaloonEngine(256, 224, 3);
         engine.bg_color = '#000000';
 
         // ADD INITIAL STATE (entities, worlds, etc) HERE
-        engine.addEntity(new Player(5 * 16, 6 * 16));
+        var player = new Player(5 * 16, 6 * 16);
+        engine.addEntity(player);
+        engine.player = player;
 
         // ADD TALKABLE PLAYER
         engine.addEntity(new Talkable(10 * 16, 8 * 16, 'Hello fellow barfighter!'));

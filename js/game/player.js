@@ -26,6 +26,8 @@ define(function(require) {
 
         this._dpress = false;
         this._talkwait = false;
+
+        this.battleChance = 0;
     }
     Player.prototype = Object.create(Entity.prototype);
 
@@ -69,6 +71,12 @@ define(function(require) {
                 case 'down': this.y++; break;
                 case 'left': this.x--; break;
                 case 'right': this.x++; break;
+            }
+
+            this.battleChance += (Math.random() * 0.001);
+            if (Math.min(Math.random() + 0.1, 0.8) < this.battleChance) {
+                this.battleChance = 0;
+                this.engine.triggerBattle();
             }
         }
 

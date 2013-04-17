@@ -1,12 +1,92 @@
-body {
-    background: #101010;
+@font-face {
+    font-family: 'Final Fantasy 2';
+    src: url('../fonts/final_fantasy_2-webfont.eot');
+    src: url('../fonts/final_fantasy_2-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/final_fantasy_2-webfont.woff') format('woff'),
+         url('../fonts/final_fantasy_2-webfont.ttf') format('truetype'),
+         url('../fonts/final_fantasy_2-webfont.svg#final_fantasy_2regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
 }
 
-canvas {
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+body {
+    background: #101010;
+    font-family: "Final Fantasy 2", sans-serif;
+    font-size: 15px;
+}
+
+#container {
     left: 50%;
     margin: -336px 0 0 -384px;
     position: absolute;
     top: 50%;
+    height: 672px;
+    width: 769px;
+}
+
+#game {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.bluebox {
+    color: #fff;
+    background: #0200C1;
+    border: 4px solid #fff;
+    z-index: 10;
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    border-radius: 7px;
+}
+
+.hidden {
+    display: none;
+}
+
+#enemy-info {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 480px;
+    top: 528px;
+}
+
+#enemy-info li {
+    list-style-type: none;
+    margin: 16px 0 16px 16px;
+}
+
+#player-info {
+    bottom: 0;
+    left: 288px;
+    position: absolute;
+    right: 0;
+    top: 528px;
+}
+
+#player-info dt,
+#player-info dd {
+    display: inline-block;
+    margin: 16px;
+    width: 204px;
+    overflow: hidden;
+}
+
+#player-info dd {
+    text-align: right;
+}
+
+canvas {
+    display: block;
 }
 
 .dialog {
@@ -18,15 +98,7 @@ canvas {
 	height: 78px;
 	margin: 0 0 0 -240px;
 	padding: 10px;
-	color: #fff;
-	font-weight: bold;
-	text-transform: uppercase;
-	background: #0200C1;
-	border: 4px solid #fff;
 	z-index: 10;
-	-webkit-border-radius: 15px;
-	-moz-border-radius: 15px;
-	border-radius: 15px;
 	-webkit-animation: .3s fadeIn 1 ease-in;
 	-moz-animation: .3s fadeIn 1 ease-in;
 	-o-animation: .3s fadeIn 1 ease-in;
@@ -34,21 +106,31 @@ canvas {
 }
 
 @-webkit-keyframes fadeIn {
-	0% {opacity: 0;}	
+	0% {opacity: 0;}
 	100% {opacity: 1;}
 }
 
 @-moz-keyframes fadeIn {
-	0% {opacity: 0;}	
+	0% {opacity: 0;}
 	100% {opacity: 1;}
 }
 
 @-o-keyframes fadeIn {
-	0% {opacity: 0;}	
+	0% {opacity: 0;}
 	100% {opacity: 1;}
 }
 
 @keyframes fadeIn {
-	0% {opacity: 0;}	
+	0% {opacity: 0;}
 	100% {opacity: 1;}
+}
+
+#footer {
+    color: #FFFFFF;
+    position: absolute;
+    bottom: -50px;
+}
+
+#footer a {
+    color: #FFF;
 }

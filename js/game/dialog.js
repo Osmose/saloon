@@ -4,7 +4,7 @@ define(function(require) {
 
 	function Dialog () {
 		var dialog = document.createElement('div');
-		dialog.setAttribute('class', 'dialog');
+		dialog.setAttribute('class', 'dialog bluebox');
 
 		document.getElementById('game').appendChild(dialog);
 		this.el = $(dialog);
