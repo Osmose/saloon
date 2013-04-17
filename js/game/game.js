@@ -6,7 +6,7 @@ define(function(require) {
 
     var loader = require('game/loader');
     var Player = require('game/player');
-    var SaloonWorld = require('game/world');
+    var SaloonEngine = require('game/engine');
 
     // REGISTER RESOURCES TO LOAD HERE
     loader.register('tiles_player', 'img/player.png', 'image');
@@ -16,7 +16,7 @@ define(function(require) {
     // Callback run once all resources have been loaded.
     loader.loadAll().done(function() {
         // Initialize engine.
-        var engine = new Engine(256, 224, 3, new SaloonWorld());
+        var engine = new SaloonEngine(256, 224, 3);
         engine.bg_color = '#000000';
 
         // ADD INITIAL STATE (entities, worlds, etc) HERE

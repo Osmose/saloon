@@ -2,9 +2,38 @@ body {
     background: #101010;
 }
 
-canvas {
+#container {
     left: 50%;
     margin: -336px 0 0 -384px;
     position: absolute;
     top: 50%;
+    height: 672px;
+    width: 769px;
+}
+
+#game {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.bluebox {
+    background: #0000CC;
+    border: 1px solid #FFFFFF;
+}
+
+.hidden {
+    display: hidden;
+}
+
+#enemy-info {
+    bottom: 672px;
+    left: 0;
+    position: absolute;
+    right: 480px;
+    top: 480px;
+}
+
+canvas {
+    display: block;
 }
