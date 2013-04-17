@@ -36,14 +36,9 @@ define(function(require) {
 
         $('#game').on('keypress', function () {
             if (kb.check(kb.SPACE) && that.engine.world === dialogWorld) {
-                that.stopTalking();
+                that.engine.popWorld();
             }
         });
-    };
-
-    Talkable.prototype.stopTalking = function () {
-        this.dialog.hide();
-        this.engine.popWorld();
     };
 
     return Talkable;
