@@ -28,6 +28,14 @@ define(function(require) {
         this._talkwait = false;
 
         this.battleChance = 0;
+
+        this.level = 1;
+        this.hp = 80;
+        this.max_hp = 80;
+
+        this.atk = 3;
+        this.def = 1;
+        this.speed = 2;
     }
     Player.prototype = Object.create(Entity.prototype);
 

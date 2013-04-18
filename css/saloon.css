@@ -65,6 +65,30 @@ body {
     margin: 16px 0 16px 16px;
 }
 
+#battle-choices {
+    bottom: 0;
+    left: 144px;
+    position: absolute;
+    right: 480px;
+    top: 528px;
+}
+
+#battle-choices li {
+    list-style-type: none;
+    margin: 16px 0 16px 16px;
+}
+
+.selected {
+    position: relative;
+}
+
+.selected:before {
+    content: url(../img/hand_big.png);
+    position: absolute;
+    top: -8px;
+    left: -56px;
+}
+
 #player-info {
     bottom: 0;
     left: 288px;
