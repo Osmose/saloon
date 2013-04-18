@@ -12,6 +12,7 @@ define(function(require) {
         this.graphic = new TiledGraphic(loader.get('battle_player'), 24, 24);
         this.graphic.addTileName('standing', 0);
         this.graphic.addTileName('punch', 1);
+        this.graphic.addAnimationName('walking', [0, 8, 2, 8]);
         this.graphic.currentTile = 'standing';
 
         this.player = player;

@@ -16,7 +16,7 @@ define(function(require) {
                                         attrs.graphic.tileWidth,
                                         attrs.graphic.tileHeight);
         this.graphic.addTileName('normal', 0);
-        this.graphic.addAnimationName('flashing', [0, 12, 1, 12]);
+        this.graphic.addAnimationName('flashing', [0, 8, 1, 8]);
         this.graphic.currentTile = 'normal';
 
         this.hp = attrs.hp;

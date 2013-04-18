@@ -9,6 +9,7 @@ define(function(require) {
     var BattlePlayer = require('game/battle/player');
     var Enemy = require('game/enemy');
     var Procession = require('game/procession');
+    var Text = require('game/text');
 
     var loader = require('game/loader');
 
@@ -157,29 +158,47 @@ define(function(require) {
     };
 
     BattleWorld.prototype.fight = function() {
-        this.currentProcession = new Procession(128, BattleWorld.fightProcessionData, this);
+        this.currentProcession = new Procession(136, BattleWorld.fightProcessionData, this);
     };
     BattleWorld.fightProcessionData = {
         1: function() {
-            console.log('test');
+            this.battlePlayer.graphic.currentTile = 'walking';
             this.battlePlayer.dx = -0.5;
         },
         48:  function() {
             this.battlePlayer.dx = 0;
+            this.battlePlayer.graphic.currentTile = 'standing';
             this.battlePlayer.x = (16 * 12) - 8;
         },
         64:  function() {
             this.battlePlayer.graphic.currentTile = 'punch';
             this.enemies[this.currentTarget].graphic.currentTile = 'flashing';
         },
+        76: function() {
+            var enemy = this.enemies[this.currentTarget];
+            var dmg = this.battlePlayer.attack(enemy);
+            this.dmgText = new Text(enemy.x + 10, enemy.y + 16, dmg);
+            this.addEntity(this.dmgText);
+            this.dmgText.dy = -1;
+        },
+        79: function() { this.dmgText.dy = 1; },
         88:  function() {
-            this.battlePlayer.graphic.currentTile = 'standing';
+            this.battlePlayer.graphic.currentTile = 'walking';
             this.battlePlayer.dx = 0.5;
+        },
+        95: function() { this.dmgText.dy = -1; },
+        98: function() { this.dmgText.dy = 1; },
+        101: function() { this.dmgText.dy = -1; },
+        104: function() { this.dmgText.dy = 0; },
+        112: function() {
+            this.enemies[this.currentTarget].graphic.currentTile = 'normal';
         },
         136:  function() {
             this.battlePlayer.dx = 0;
+            this.battlePlayer.graphic.currentTile = 'standing';
             this.battlePlayer.x = 16 * 13;
-            this.enemies[this.currentTarget].graphic.currentTile = 'normal';
+            this.removeEntity(this.dmgText);
+            this.dmgText = null;
         }
     };
 
