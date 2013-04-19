@@ -30,6 +30,7 @@ define(function(require) {
         this.battleChance = 0;
 
         this.level = 1;
+        this.exp = 0;
         this.hp = 80;
         this.max_hp = 80;
 
@@ -90,6 +91,10 @@ define(function(require) {
 
         var tile = (this.walking ? 'walk_' : '') + this.direction;
         this.graphic.currentTile = tile;
+    };
+
+    Player.prototype.addExp = function(exp) {
+        this.exp += exp;
     };
 
     return Player;

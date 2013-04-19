@@ -25,6 +25,7 @@ define(function(require) {
                                                 16, 16, 0, 0);
 
         this.enemies = [];
+        this.exp = 0;
 
         this.block_tick = true;
         this.block_render = true;
@@ -35,6 +36,7 @@ define(function(require) {
         this.$enemyInfo = $('#enemy-info');
         this.$playerInfo = $('#player-info');
         this.$battleChoices = $('#battle-choices');
+        this.$battleMsg = $('#battle-msg');
 
         this.paused = false;
         this.currentProcession = null;
@@ -58,6 +60,15 @@ define(function(require) {
         // Handle menu actions.
         if (this.cursorMode !== null) {
             this.handleCursor();
+        }
+
+        if (this._victory) {
+            this._victory = false;
+            this.currentProcession = new Procession(
+                256,
+                BattleWorld.victoryProcessionEvents,
+                this
+            );
         }
 
         // If there is a current procession (animation), progress it and do
@@ -113,15 +124,22 @@ define(function(require) {
             this.$enemyInfo.append('<li>' + enemy.name + '</li>');
         }, this);
 
-        this.$playerInfo.empty();
-        this.$playerInfo.append('<dt id="p1-name">Charles</dt>');
-        this.$playerInfo.append('<dd id="p1-health">' + this.battlePlayer.hp +
-                                ' / ' + this.battlePlayer.max_hp + '</dd>');
+        this.$playerInfo.empty()
+            .append('<dt id="p1-name">Charles</dt>')
+            .append('<dd id="p1-health">' + this.battlePlayer.hp + ' / ' +
+                    this.battlePlayer.max_hp + '</dd>');
 
-        this.$battleChoices.append('<li class="selected" data-action="fight">Fight</li>');
+        this.$battleChoices.empty().append('<li class="selected" data-action="fight">Fight</li>');
 
         this.$enemyInfo.show();
         this.$playerInfo.show();
+    };
+
+    BattleWorld.prototype.tearDownBattle = function() {
+        this.$battleMsg.hide();
+        this.$enemyInfo.hide();
+        this.$playerInfo.hide();
+        this.$battleChoices.hide();
     };
 
     BattleWorld.prototype.playerAction = function() {
@@ -160,6 +178,32 @@ define(function(require) {
     BattleWorld.prototype.fight = function() {
         this.currentProcession = new Procession(136, BattleWorld.fightProcessionData, this);
     };
+
+    BattleWorld.prototype.kill = function(enemy) {
+        this.enemies = this.enemies.filter(function(e) {
+            return e.id !== enemy.id;
+        });
+        this.removeEntity(enemy);
+
+        if (this.enemies.length === 0) {
+            this._victory = true;
+        }
+    };
+
+    BattleWorld.prototype.enemyAction = function(enemy) {
+
+    };
+
+    BattleWorld.prototype.generateEnemies = function() {
+        this.enemies = [new Enemy(16 * 2, 16 * 6, 'thug')];
+        this.exp = this.enemies.reduce(function(exp, enemy) {
+            return exp + enemy.exp;
+        }, 0);
+        for (var k = 0; k < this.enemies.length; k++) {
+            this.addEntity(this.enemies[k]);
+        }
+    };
+
     BattleWorld.fightProcessionData = {
         1: function() {
             this.battlePlayer.graphic.currentTile = 'walking';
@@ -199,17 +243,26 @@ define(function(require) {
             this.battlePlayer.x = 16 * 13;
             this.removeEntity(this.dmgText);
             this.dmgText = null;
+            this.battlePlayer.acting = false;
+
+            var enemy = this.enemies[this.currentTarget];
+            if (enemy.hp <= 0) {
+                this.kill(enemy);
+            }
         }
     };
 
-    BattleWorld.prototype.enemyAction = function(enemy) {
-
-    };
-
-    BattleWorld.prototype.generateEnemies = function() {
-        this.enemies = [new Enemy(16 * 2, 16 * 6, 'thug')];
-        for (var k = 0; k < this.enemies.length; k++) {
-            this.addEntity(this.enemies[k]);
+    BattleWorld.victoryProcessionEvents = {
+        1: function() {
+            this.$battleMsg.text('Victory!').show();
+        },
+        128: function() {
+            this.battlePlayer.player.addExp(this.exp);
+            this.$battleMsg.text('Gained ' + this.exp + ' experience!');
+        },
+        256: function() {
+            this.tearDownBattle();
+            this.engine.popWorld();
         }
     };
 

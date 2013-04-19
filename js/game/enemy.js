@@ -23,6 +23,7 @@ define(function(require) {
         this.atk = attrs.atk;
         this.def = attrs.def;
         this.speed = attrs.speed;
+        this.exp = attrs.exp;
 
         this.time = 0;
     }
@@ -52,7 +53,8 @@ define(function(require) {
             hp: 4,
             atk: 5,
             def: 1,
-            speed: 1
+            speed: 1,
+            exp: 2
         }
     };
 
