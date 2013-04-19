@@ -32,6 +32,9 @@ define(function(require) {
         // Create map.
         var map = loader.get('map_bar');
         var tilemap = new Tilemap(map.layers['tiles'].grid, 0, 0);
+        tilemap.solid = {
+            solid: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+        };
 
         // Create tuled graphic for rendering tilemap.
         tilemap.graphic = new TiledGraphic(loader.get('tiles_bar'),

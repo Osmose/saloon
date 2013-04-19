@@ -5,6 +5,7 @@ define(function(require) {
     var loader = require('game/loader');
 
     loader.register('enemy_thug', 'img/barfighter1.png', 'image');
+    loader.register('enemy_dancer', 'img/dancer.png', 'image');
 
     function Enemy(x, y, type) {
         Entity.call(this, x, y);
@@ -55,6 +56,19 @@ define(function(require) {
             def: 1,
             speed: 1,
             exp: 2
+        },
+        dancer: {
+            name: 'Tipsy Dancer',
+            graphic: {
+                id: 'enemy_dancer',
+                tileWidth: 32,
+                tileHeight: 60
+            },
+            hp: 2,
+            atk: 3,
+            def: 1,
+            speed: 1,
+            exp: 1
         }
     };
 

@@ -43,28 +43,43 @@ define(function(require) {
     Player.prototype.tick = function() {
         Entity.prototype.tick.call(this);
         var kb = this.engine.kb;
+        var dx = 0;
+        var dy = 0;
 
         this.walking = false;
         if (kb.check(kb.RIGHT)) {
-            this.walking = true;
             this.direction = 'right';
+            dx += 1;
         }
         if (kb.check(kb.LEFT)) {
-            this.walking = true;
             this.direction = 'left';
+            dx -= 1;
         }
         if (kb.check(kb.UP)) {
-            this.walking = true;
             this.direction = 'up';
+            dy -= 1;
         }
         if (kb.check(kb.DOWN)) {
-            this.walking = true;
             this.direction = 'down';
+            dy += 1;
         }
 
         if(!this._dpress && !this._talkwait && kb.check(kb.D)) {
             this._depress = true;
-            var talkable = this.getCollideEntity('talkable', 5, 5);
+
+            var tdx = 0;
+            var tdy = 0;
+            switch (this.direction) {
+                case 'right':
+                    tdx += 8; break;
+                case 'left':
+                    tdx -= 8; break;
+                case 'up':
+                    tdy -= 8; break;
+                case 'down':
+                    tdy += 8; break;
+            }
+            var talkable = this.getCollideEntity('talkable', tdx, tdy);
             if (talkable) {
                 this._talkwait = true;
                 talkable.talk();
@@ -74,18 +89,23 @@ define(function(require) {
             this._talkwait = false;
         }
 
-        if (this.walking) {
-            switch (this.direction) {
-                case 'up': this.y--; break;
-                case 'down': this.y++; break;
-                case 'left': this.x--; break;
-                case 'right': this.x++; break;
+        if (dx !== 0 || dy !== 0) {
+            if (dx && !this.collideTilemap(this.world.tilemap, 'solid', dx, 0)) {
+                this.x += dx;
+                this.walking = true;
             }
 
-            this.battleChance += (Math.random() * 0.001);
-            if (Math.min(Math.random() + 0.1, 0.8) < this.battleChance) {
-                this.battleChance = 0;
-                this.engine.triggerBattle();
+            if (dy && !this.collideTilemap(this.world.tilemap, 'solid', 0, dy)) {
+                this.y += dy;
+                this.walking = true;
+            }
+
+            if (this.walking) {
+                this.battleChance += (Math.random() * 0.001);
+                if (Math.min(Math.random() + 0.1, 0.8) < this.battleChance) {
+                    this.battleChance = 0;
+                    this.engine.triggerBattle();
+                }
             }
         }
 

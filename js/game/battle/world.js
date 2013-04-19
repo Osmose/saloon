@@ -121,7 +121,7 @@ define(function(require) {
 
         this.$enemyInfo.empty();
         this.enemies.forEach(function(enemy) {
-            this.$enemyInfo.append('<li>' + enemy.name + '</li>');
+            this.$enemyInfo.append('<li id="enemy-' + enemy.id + '">' + enemy.name + '</li>');
         }, this);
 
         this.$playerInfo.empty()
@@ -172,6 +172,17 @@ define(function(require) {
                     this.fight();
                 }
             }
+
+            if (kb.pressed(kb.DOWN)) {
+                this.currentTarget = (this.currentTarget + 1) % this.enemies.length;
+            }
+
+            if (kb.pressed(kb.UP)) {
+                this.currentTarget--;
+                if (this.currentTarget < 0) {
+                    this.currentTarget = this.enemies.length - 1;
+                }
+            }
         }
     };
 
@@ -184,6 +195,7 @@ define(function(require) {
             return e.id !== enemy.id;
         });
         this.removeEntity(enemy);
+        this.$enemyInfo.find('#enemy-' + enemy.id).remove();
 
         if (this.enemies.length === 0) {
             this._victory = true;
@@ -195,14 +207,27 @@ define(function(require) {
     };
 
     BattleWorld.prototype.generateEnemies = function() {
-        this.enemies = [new Enemy(16 * 2, 16 * 6, 'thug')];
+        var i = Math.floor(Math.random() * BattleWorld.enemyGroups.length);
+        var enemyGroup = BattleWorld.enemyGroups[i];
+        for (var k = 0; k < enemyGroup.length; k++) {
+            var enemy = enemyGroup[k];
+            this.enemies.push(new Enemy(enemy.x * 16, enemy.y * 16, enemy.id));
+        }
+
         this.exp = this.enemies.reduce(function(exp, enemy) {
             return exp + enemy.exp;
         }, 0);
-        for (var k = 0; k < this.enemies.length; k++) {
-            this.addEntity(this.enemies[k]);
+
+        for (var j = 0; j < this.enemies.length; j++) {
+            this.addEntity(this.enemies[j]);
         }
     };
+
+    BattleWorld.enemyGroups = [
+        [{id: 'thug', x: 3, y: 4}, {id: 'thug', x: 2, y: 7}],
+        [{id: 'thug', x: 2, y: 8}, {id: 'dancer', x: 3, y: 4}],
+        [{id: 'thug', x: 3, y: 4}]
+    ];
 
     BattleWorld.fightProcessionData = {
         1: function() {
